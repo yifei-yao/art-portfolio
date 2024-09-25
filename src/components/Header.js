@@ -20,11 +20,7 @@ function Header() {
               {category.name}
             </Link>
             <div className="dropdown-menu">
-              {/* Dropdown menu */}
-              <Link to={`/${category.name}`} className="dropdown-item">
-                All {category.name}
-              </Link>
-              <hr className="dropdown-divider" />
+              {/* Dropdown menu with years only */}
               {category.years.map((year) => (
                 <Link
                   key={year.year}
