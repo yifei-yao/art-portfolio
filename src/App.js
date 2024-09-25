@@ -10,6 +10,7 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<Content />} />
+        <Route path="/:categoryName" element={<Content />} />
         <Route path="/:categoryName/:year" element={<Content />} />
       </Routes>
     </Router>

@@ -1,12 +1,5 @@
 {
-    "featured": [
-    {
-      "id": 3,
-      "title": "Starry Night",
-      "type": "image",
-      "src": "/assets/images/starry_night.jpg",
-      "description": "An iconic night sky painting."
-    },
+  "artworks": [
     {
       "id": 1,
       "title": "Symphony No. 5",
@@ -20,57 +13,44 @@
       "type": "text",
       "src": "/assets/texts/sonnet_18.txt",
       "description": "A renowned sonnet."
+    },
+    {
+      "id": 3,
+      "title": "Starry Night",
+      "type": "image",
+      "src": "/assets/images/starry_night.jpg",
+      "description": "An iconic night sky painting."
     }
   ],
+  "featured": [3, 1, 2],
   "categories": [
     {
       "name": "Music",
+      "featured": [1],
       "years": [
         {
           "year": "1808",
-          "works": [
-            {
-              "id": 1,
-              "title": "Symphony No. 5",
-              "type": "audio",
-              "src": "/assets/music/beethoven_symphony_5.m4a",
-              "description": "A classic symphony."
-            }
-          ]
+          "works": [1]
         }
       ]
     },
     {
       "name": "Literature",
+      "featured": [2],
       "years": [
         {
           "year": "1609",
-          "works": [
-            {
-              "id": 2,
-              "title": "Sonnet 18",
-              "type": "text",
-              "src": "/assets/texts/sonnet_18.txt",
-              "description": "A renowned sonnet."
-            }
-          ]
+          "works": [2]
         }
       ]
     },
     {
       "name": "Fine Arts",
+      "featured": [3],
       "years": [
         {
           "year": "1889",
-          "works": [
-            {
-              "id": 3,
-              "title": "Starry Night",
-              "type": "image",
-              "src": "/assets/images/starry_night.jpg",
-              "description": "An iconic night sky painting."
-            }
-          ]
+          "works": [3]
         }
       ]
     }
