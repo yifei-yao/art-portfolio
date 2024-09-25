@@ -27,7 +27,7 @@ function Header() {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Client's Name
+          Renaissance Man
         </Typography>
         {artworksData.categories.map((category) => (
           <div key={category.name}>
