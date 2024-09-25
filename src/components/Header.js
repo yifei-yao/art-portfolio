@@ -2,83 +2,43 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import artworksData from '../data/artworks.json';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import { Menu, MenuItem, Button } from '@mui/material';
+import './Header.css'; // Make sure to import the CSS file
 
 function Header() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [openMenu, setOpenMenu] = React.useState(null);
-
-  const handleMenuOpen = (event, categoryName) => {
-    setAnchorEl(event.currentTarget);
-    setOpenMenu(categoryName);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    setOpenMenu(null);
-  };
-
   return (
-    <AppBar position="static" sx={{ backgroundColor: 'transparent', boxShadow: 'none' }}>
-      <Toolbar>
-        {}
-        <Typography
-          variant="h5"
-          sx={{ flexGrow: 1, color: '#000', textDecoration: 'none' }}
-          component={Link}
-          to="/"
-        >
-          {}
-          Renaissance Guy
-        </Typography>
+    <header className="header">
+      {/* Artist's Name */}
+      <Link to="/" className="artist-name">
+        Renaissance Guy
+      </Link>
+
+      {/* Navigation */}
+      <nav className="nav">
         {artworksData.categories.map((category) => (
-          <div key={category.name}>
-            <Button
-              color="inherit"
-              sx={{ color: '#000', textTransform: 'none' }}
-              onClick={(event) => handleMenuOpen(event, category.name)}
-            >
+          <div className="nav-item" key={category.name}>
+            <Link to={`/${category.name}`} className="nav-link">
               {category.name}
-            </Button>
-            <Menu
-              anchorEl={anchorEl}
-              open={openMenu === category.name}
-              onClose={handleMenuClose}
-              getContentAnchorEl={null}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'left',
-              }}
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-            >
-              <MenuItem
-                component={Link}
-                to={`/${category.name}`}
-                onClick={handleMenuClose}
-              >
+            </Link>
+            <div className="dropdown-menu">
+              {/* Dropdown menu */}
+              <Link to={`/${category.name}`} className="dropdown-item">
                 All {category.name}
-              </MenuItem>
+              </Link>
+              <hr className="dropdown-divider" />
               {category.years.map((year) => (
-                <MenuItem
+                <Link
                   key={year.year}
-                  component={Link}
                   to={`/${category.name}/${year.year}`}
-                  onClick={handleMenuClose}
+                  className="dropdown-item"
                 >
                   {year.year}
-                </MenuItem>
+                </Link>
               ))}
-            </Menu>
+            </div>
           </div>
         ))}
-      </Toolbar>
-    </AppBar>
+      </nav>
+    </header>
   );
 }
 

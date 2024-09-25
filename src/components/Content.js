@@ -1,8 +1,16 @@
 // Content.js
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link as RouterLink } from 'react-router-dom';
 import artworksData from '../data/artworks.json';
-import { Grid, Typography, Box, Button } from '@mui/material';
+import {
+  Box,
+  Grid,
+  Image,
+  Text,
+  Button,
+  VStack,
+  HStack,
+} from '@chakra-ui/react';
 
 function Content() {
   const { categoryName, year } = useParams();
@@ -18,7 +26,9 @@ function Content() {
 
   if (isHomepage) {
     // Display featured artworks on the home page
-    return <ArtworksGrid artworkIds={artworksData.featured} artworksMap={artworksMap} />;
+    return (
+      <ArtworksGrid artworkIds={artworksData.featured} artworksMap={artworksMap} />
+    );
   }
 
   if (isCategoryPage) {
@@ -29,9 +39,9 @@ function Content() {
 
     if (!category) {
       return (
-        <Typography variant="h4" sx={{ padding: 2 }}>
-          Category not found
-        </Typography>
+        <Box p={4}>
+          <Text fontSize="2xl">Category not found</Text>
+        </Box>
       );
     }
 
@@ -41,21 +51,22 @@ function Content() {
         <ArtworksGrid artworkIds={category.featured} artworksMap={artworksMap} />
 
         {/* List of years */}
-        <Box sx={{ padding: 2 }}>
-          <Typography variant="h6">Select a Year</Typography>
-          <Box sx={{ display: 'flex', flexWrap: 'wrap' }}>
+        <Box p={4}>
+          <Text fontSize="xl" mb={2}>
+            Select a Year
+          </Text>
+          <HStack spacing={4} wrap="wrap">
             {category.years.map((yearData) => (
               <Button
                 key={yearData.year}
-                component={Link}
+                as={RouterLink}
                 to={`/${category.name}/${yearData.year}`}
-                sx={{ margin: 1 }}
-                variant="outlined"
+                variant="outline"
               >
                 {yearData.year}
               </Button>
             ))}
-          </Box>
+          </HStack>
         </Box>
       </Box>
     );
@@ -69,9 +80,9 @@ function Content() {
 
     if (!category) {
       return (
-        <Typography variant="h4" sx={{ padding: 2 }}>
-          Category not found
-        </Typography>
+        <Box p={4}>
+          <Text fontSize="2xl">Category not found</Text>
+        </Box>
       );
     }
 
@@ -79,9 +90,9 @@ function Content() {
 
     if (!yearData) {
       return (
-        <Typography variant="h4" sx={{ padding: 2 }}>
-          No works available for {year}
-        </Typography>
+        <Box p={4}>
+          <Text fontSize="2xl">No works available for {year}</Text>
+        </Box>
       );
     }
 
@@ -95,57 +106,53 @@ function Content() {
 
 function ArtworksGrid({ artworkIds, artworksMap }) {
   return (
-    <Grid container spacing={2} sx={{ padding: 2 }}>
-      {artworkIds.map((id) => {
-        const work = artworksMap[id];
+    <Box p={4}>
+      <Grid templateColumns="repeat(auto-fill, minmax(250px, 1fr))" gap={6}>
+        {artworkIds.map((id) => {
+          const work = artworksMap[id];
 
-        // Check if the artwork exists
-        if (!work) {
-          return null; // Or handle the missing artwork appropriately
-        }
+          // Check if the artwork exists
+          if (!work) {
+            return null; // Or handle the missing artwork appropriately
+          }
 
-        return (
-          <Grid item xs={12} sm={6} md={4} key={work.id}>
-            <Box>
+          return (
+            <Box key={work.id}>
               {work.type === 'image' && (
-                <>
-                  <img
-                    src={work.src}
-                    alt={work.title}
-                    style={{ width: '100%', height: 'auto' }}
-                  />
-                  <Box sx={{ marginTop: 1, textAlign: 'center' }}>
-                    <Typography variant="subtitle1">{work.title}</Typography>
-                    {work.description && (
-                      <Typography variant="body2" color="textSecondary">
-                        {work.description}
-                      </Typography>
-                    )}
-                  </Box>
-                </>
+                <VStack spacing={2}>
+                  <Image src={work.src} alt={work.title} />
+                  <Text fontSize="lg" fontWeight="bold">
+                    {work.title}
+                  </Text>
+                  {work.description && (
+                    <Text fontSize="sm" color="gray.600">
+                      {work.description}
+                    </Text>
+                  )}
+                </VStack>
               )}
               {work.type === 'audio' && (
-                <Box sx={{ textAlign: 'center' }}>
-                  <Typography variant="subtitle1">{work.title}</Typography>
+                <VStack spacing={2} align="center">
+                  <Text fontSize="lg" fontWeight="bold">
+                    {work.title}
+                  </Text>
                   <audio controls style={{ width: '100%' }}>
                     <source src={work.src} type="audio/mpeg" />
                     Your browser does not support the audio element.
                   </audio>
                   {work.description && (
-                    <Typography variant="body2" color="textSecondary">
+                    <Text fontSize="sm" color="gray.600">
                       {work.description}
-                    </Typography>
+                    </Text>
                   )}
-                </Box>
+                </VStack>
               )}
-              {work.type === 'text' && (
-                <TextWorkCard work={work} />
-              )}
+              {work.type === 'text' && <TextWorkCard work={work} />}
             </Box>
-          </Grid>
-        );
-      })}
-    </Grid>
+          );
+        })}
+      </Grid>
+    </Box>
   );
 }
 
@@ -163,17 +170,17 @@ function TextWorkCard({ work }) {
   }, [work.src]);
 
   return (
-    <Box sx={{ textAlign: 'center' }}>
-      <Typography variant="subtitle1">{work.title}</Typography>
-      <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
-        {textContent}
-      </Typography>
+    <VStack spacing={2} align="center">
+      <Text fontSize="lg" fontWeight="bold">
+        {work.title}
+      </Text>
+      <Text whiteSpace="pre-wrap">{textContent}</Text>
       {work.description && (
-        <Typography variant="body2" color="textSecondary">
+        <Text fontSize="sm" color="gray.600">
           {work.description}
-        </Typography>
+        </Text>
       )}
-    </Box>
+    </VStack>
   );
 }
 
