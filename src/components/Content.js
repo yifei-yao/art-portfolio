@@ -2,20 +2,18 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import artworksData from '../data/artworks.json';
-import { Grid, Card, CardMedia, CardContent, Typography } from '@mui/material';
+import { Grid, Card, CardMedia, CardContent, Typography, Box } from '@mui/material';
 
 function Content() {
   const { categoryName, year } = useParams();
-
-  // Check if categoryName and year are provided
   const isHomepage = !categoryName && !year;
 
   if (isHomepage) {
-    // Display featured artworks on the homepage
-    return <FeaturedArtworks artworks={artworksData.featured} />;
+    // Display featured artworks without "Featured Works" heading
+    return <ArtworksGrid works={artworksData.featured} />;
   }
 
-  // Existing code to display artworks based on category and year
+  // Find the category and year
   const category = artworksData.categories.find(
     (cat) => cat.name === categoryName
   );
@@ -43,55 +41,53 @@ function Content() {
   return <ArtworksGrid works={works} />;
 }
 
-function FeaturedArtworks({ artworks }) {
-  return (
-    <div>
-      <Typography variant="h4" sx={{ padding: 2, textAlign: 'center' }}>
-        Featured Works
-      </Typography>
-      <ArtworksGrid works={artworks} />
-    </div>
-  );
-}
-
 function ArtworksGrid({ works }) {
   return (
     <Grid container spacing={2} sx={{ padding: 2 }}>
       {works.map((work) => (
         <Grid item xs={12} sm={6} md={4} key={work.id}>
-          <Card>
+          <Card
+            sx={{
+              boxShadow: 'none',
+              borderRadius: 0,
+              backgroundColor: 'transparent',
+            }}
+          >
+            {/* Updated code for image type */}
             {work.type === 'image' && (
-              <CardMedia
-                component="img"
-                height="200"
-                image={work.src}
-                alt={work.title}
-              />
+              <>
+                <CardMedia
+                  component="img"
+                  image={work.src}
+                  alt={work.title}
+                  sx={{ width: '100%', height: 'auto' }}
+                />
+                <CardContent sx={{ textAlign: 'center' }}>
+                  <Typography variant="subtitle1">{work.title}</Typography>
+                  {work.description && (
+                    <Typography variant="body2" color="textSecondary">
+                      {work.description}
+                    </Typography>
+                  )}
+                </CardContent>
+              </>
             )}
+            {/* Audio work remains the same */}
             {work.type === 'audio' && (
-              <CardContent>
+              <CardContent sx={{ textAlign: 'center' }}>
                 <Typography variant="h6">{work.title}</Typography>
-                <Typography variant="subtitle1">
-                  {work.artist || work.author}
-                </Typography>
                 <audio controls style={{ width: '100%' }}>
                   <source src={work.src} type="audio/mpeg" />
                   Your browser does not support the audio element.
                 </audio>
-                <Typography variant="body2">{work.description}</Typography>
+                {work.description && (
+                  <Typography variant="body2">{work.description}</Typography>
+                )}
               </CardContent>
             )}
+            {/* Text work remains the same */}
             {work.type === 'text' && (
               <TextWorkCard work={work} />
-            )}
-            {work.type === 'image' && (
-              <CardContent>
-                <Typography variant="h6">{work.title}</Typography>
-                <Typography variant="subtitle1">
-                  {work.artist || work.author}
-                </Typography>
-                <Typography variant="body2">{work.description}</Typography>
-              </CardContent>
             )}
           </Card>
         </Grid>
@@ -114,13 +110,14 @@ function TextWorkCard({ work }) {
   }, [work.src]);
 
   return (
-    <CardContent>
+    <CardContent sx={{ textAlign: 'center' }}>
       <Typography variant="h6">{work.title}</Typography>
-      <Typography variant="subtitle1">{work.author || work.artist}</Typography>
       <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
         {textContent}
       </Typography>
-      <Typography variant="body2">{work.description}</Typography>
+      {work.description && (
+        <Typography variant="body2">{work.description}</Typography>
+      )}
     </CardContent>
   );
 }
