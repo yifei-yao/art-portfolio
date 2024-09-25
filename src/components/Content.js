@@ -1,18 +1,27 @@
 // Content.js
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import artworksData from '../data/artworks.json';
 import { Grid, Card, CardMedia, CardContent, Typography } from '@mui/material';
 
 function Content() {
   const { categoryName, year } = useParams();
-
+  
   // Find the category and year
   const category = artworksData.categories.find(
     (cat) => cat.name === categoryName
   );
   const yearData = category?.years.find((y) => y.year === year);
   const works = yearData?.works || [];
+
+  // Handle cases where category or year is not found
+  if (!category) {
+    return <Typography variant="h4" sx={{ padding: 2 }}>Category not found</Typography>;
+  }
+
+  if (!yearData) {
+    return <Typography variant="h4" sx={{ padding: 2 }}>No works available for {year}</Typography>;
+  }
 
   return (
     <Grid container spacing={2} sx={{ padding: 2 }}>
@@ -40,27 +49,50 @@ function Content() {
               </CardContent>
             )}
             {work.type === 'text' && (
-              <CardContent>
-                <Typography variant="h6">{work.title}</Typography>
-                <Typography variant="subtitle1">
-                  {work.artist || work.author}
-                </Typography>
-                <Typography variant="body1">{work.content}</Typography>
-              </CardContent>
+              <TextWorkCard work={work} />
             )}
-            {work.type === 'image' && (
-              <CardContent>
-                <Typography variant="h6">{work.title}</Typography>
-                <Typography variant="subtitle1">
-                  {work.artist || work.author}
-                </Typography>
-                <Typography variant="body2">{work.description}</Typography>
-              </CardContent>
-            )}
+            <CardContent>
+              {work.type !== 'text' && (
+                <>
+                  <Typography variant="h6">{work.title}</Typography>
+                  <Typography variant="subtitle1">
+                    {work.artist || work.author}
+                  </Typography>
+                  <Typography variant="body2">{work.description}</Typography>
+                </>
+              )}
+            </CardContent>
           </Card>
         </Grid>
       ))}
     </Grid>
+  );
+}
+
+function TextWorkCard({ work }) {
+  const [textContent, setTextContent] = useState('');
+
+  useEffect(() => {
+    // Fetch the text content from the src
+    fetch(work.src)
+      .then((response) => response.text())
+      .then((data) => setTextContent(data))
+      .catch((error) => {
+        console.error('Error fetching text content:', error);
+        setTextContent('Failed to load content.');
+      });
+  }, [work.src]);
+
+  return (
+    <CardContent>
+      <Typography variant="h6">{work.title}</Typography>
+      <Typography variant="subtitle1">
+        {work.author || work.artist}
+      </Typography>
+      <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
+        {textContent}
+      </Typography>
+    </CardContent>
   );
 }
 

@@ -29,7 +29,7 @@
               "title": "Sonnet 18",
               "author": "William Shakespeare",
               "type": "text",
-              "content": "Shall I compare thee to a summer's day? Thou art more lovely and more temperate...",
+              "src": "/assets/texts/sonnet_18.txt",
               "description": "One of Shakespeare's most famous sonnets."
             }
           ]
