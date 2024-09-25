@@ -6,23 +6,55 @@ import { Grid, Card, CardMedia, CardContent, Typography } from '@mui/material';
 
 function Content() {
   const { categoryName, year } = useParams();
-  
-  // Find the category and year
+
+  // Check if categoryName and year are provided
+  const isHomepage = !categoryName && !year;
+
+  if (isHomepage) {
+    // Display featured artworks on the homepage
+    return <FeaturedArtworks artworks={artworksData.featured} />;
+  }
+
+  // Existing code to display artworks based on category and year
   const category = artworksData.categories.find(
     (cat) => cat.name === categoryName
   );
-  const yearData = category?.years.find((y) => y.year === year);
-  const works = yearData?.works || [];
 
-  // Handle cases where category or year is not found
   if (!category) {
-    return <Typography variant="h4" sx={{ padding: 2 }}>Category not found</Typography>;
+    return (
+      <Typography variant="h4" sx={{ padding: 2 }}>
+        Category not found
+      </Typography>
+    );
   }
+
+  const yearData = category.years.find((y) => y.year === year);
 
   if (!yearData) {
-    return <Typography variant="h4" sx={{ padding: 2 }}>No works available for {year}</Typography>;
+    return (
+      <Typography variant="h4" sx={{ padding: 2 }}>
+        No works available for {year}
+      </Typography>
+    );
   }
 
+  const works = yearData.works;
+
+  return <ArtworksGrid works={works} />;
+}
+
+function FeaturedArtworks({ artworks }) {
+  return (
+    <div>
+      <Typography variant="h4" sx={{ padding: 2, textAlign: 'center' }}>
+        Featured Works
+      </Typography>
+      <ArtworksGrid works={artworks} />
+    </div>
+  );
+}
+
+function ArtworksGrid({ works }) {
   return (
     <Grid container spacing={2} sx={{ padding: 2 }}>
       {works.map((work) => (
@@ -43,25 +75,24 @@ function Content() {
                   {work.artist || work.author}
                 </Typography>
                 <audio controls style={{ width: '100%' }}>
-                  <source src={work.src} type="audio/mp3" />
+                  <source src={work.src} type="audio/mpeg" />
                   Your browser does not support the audio element.
                 </audio>
+                <Typography variant="body2">{work.description}</Typography>
               </CardContent>
             )}
             {work.type === 'text' && (
               <TextWorkCard work={work} />
             )}
-            <CardContent>
-              {work.type !== 'text' && (
-                <>
-                  <Typography variant="h6">{work.title}</Typography>
-                  <Typography variant="subtitle1">
-                    {work.artist || work.author}
-                  </Typography>
-                  <Typography variant="body2">{work.description}</Typography>
-                </>
-              )}
-            </CardContent>
+            {work.type === 'image' && (
+              <CardContent>
+                <Typography variant="h6">{work.title}</Typography>
+                <Typography variant="subtitle1">
+                  {work.artist || work.author}
+                </Typography>
+                <Typography variant="body2">{work.description}</Typography>
+              </CardContent>
+            )}
           </Card>
         </Grid>
       ))}
@@ -73,7 +104,6 @@ function TextWorkCard({ work }) {
   const [textContent, setTextContent] = useState('');
 
   useEffect(() => {
-    // Fetch the text content from the src
     fetch(work.src)
       .then((response) => response.text())
       .then((data) => setTextContent(data))
@@ -86,12 +116,11 @@ function TextWorkCard({ work }) {
   return (
     <CardContent>
       <Typography variant="h6">{work.title}</Typography>
-      <Typography variant="subtitle1">
-        {work.author || work.artist}
-      </Typography>
+      <Typography variant="subtitle1">{work.author || work.artist}</Typography>
       <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
         {textContent}
       </Typography>
+      <Typography variant="body2">{work.description}</Typography>
     </CardContent>
   );
 }
