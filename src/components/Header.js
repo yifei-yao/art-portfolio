@@ -38,10 +38,8 @@ function Header() {
           <div key={category.name}>
             <Button
               color="inherit"
-              component={Link}
-              to={`/${category.name}`}
               sx={{ color: '#000', textTransform: 'none' }}
-              onMouseOver={(event) => handleMenuOpen(event, category.name)}
+              onClick={(event) => handleMenuOpen(event, category.name)}
             >
               {category.name}
             </Button>
@@ -49,8 +47,23 @@ function Header() {
               anchorEl={anchorEl}
               open={openMenu === category.name}
               onClose={handleMenuClose}
-              MenuListProps={{ onMouseLeave: handleMenuClose }}
+              getContentAnchorEl={null}
+              anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'left',
+              }}
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'left',
+              }}
             >
+              <MenuItem
+                component={Link}
+                to={`/${category.name}`}
+                onClick={handleMenuClose}
+              >
+                All {category.name}
+              </MenuItem>
               {category.years.map((year) => (
                 <MenuItem
                   key={year.year}
