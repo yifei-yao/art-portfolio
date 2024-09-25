@@ -5,9 +5,7 @@ import artworksData from '../data/artworks.json';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
+import { Menu, MenuItem, Button } from '@mui/material';
 
 function Header() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -24,15 +22,25 @@ function Header() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: 'transparent', boxShadow: 'none' }}>
       <Toolbar>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          Renaissance Man
+        {}
+        <Typography
+          variant="h5"
+          sx={{ flexGrow: 1, color: '#000', textDecoration: 'none' }}
+          component={Link}
+          to="/"
+        >
+          {}
+          Renaissance Guy
         </Typography>
         {artworksData.categories.map((category) => (
           <div key={category.name}>
             <Button
               color="inherit"
+              component={Link}
+              to={`/${category.name}`}
+              sx={{ color: '#000', textTransform: 'none' }}
               onMouseOver={(event) => handleMenuOpen(event, category.name)}
             >
               {category.name}
