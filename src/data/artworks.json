@@ -1,0 +1,58 @@
+{
+  "categories": [
+    {
+      "name": "Music",
+      "years": [
+        {
+          "year": "1808",
+          "works": [
+            {
+              "id": 1,
+              "title": "Symphony No. 5",
+              "artist": "Ludwig van Beethoven",
+              "type": "audio",
+              "src": "/assets/music/beethoven_symphony_5.mp3",
+              "description": "A famous symphony composed in 1808."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Literature",
+      "years": [
+        {
+          "year": "1609",
+          "works": [
+            {
+              "id": 2,
+              "title": "Sonnet 18",
+              "author": "William Shakespeare",
+              "type": "text",
+              "content": "Shall I compare thee to a summer's day? Thou art more lovely and more temperate...",
+              "description": "One of Shakespeare's most famous sonnets."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fine Arts",
+      "years": [
+        {
+          "year": "1889",
+          "works": [
+            {
+              "id": 3,
+              "title": "Starry Night",
+              "artist": "Vincent van Gogh",
+              "type": "image",
+              "src": "/assets/images/starry_night.jpg",
+              "description": "An oil on canvas painting depicting a night sky."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

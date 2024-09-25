@@ -1,82 +1,66 @@
+// Content.js
 import React from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import { useMediaQuery } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
-import Button from '@mui/material/Button';
-
-const artworks = [
-  // Example data
-  { id: 1, type: 'image', src: '/path/to/image1.jpg', title: 'Artwork 1' },
-  { id: 2, type: 'video', src: '/path/to/video1.mp4', title: 'Artwork 2' },
-  { id: 3, type: 'audio', src: '/path/to/audio1.mp3', title: 'Artwork 3' },
-  { id: 4, type: 'text', content: 'This is a literary work.', title: 'Artwork 4' },
-];
+import { useParams } from 'react-router-dom';
+import artworksData from '../data/artworks.json';
+import { Grid, Card, CardMedia, CardContent, Typography } from '@mui/material';
 
 function Content() {
-  const theme = useTheme();
-  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-  const [currentIndex, setCurrentIndex] = React.useState(0);
+  const { categoryName, year } = useParams();
 
-  const handlePrev = () => {
-    setCurrentIndex((prevIndex) => (prevIndex > 0 ? prevIndex - 1 : artworks.length - 1));
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex < artworks.length - 1 ? prevIndex + 1 : 0));
-  };
-
-  const currentArtwork = artworks[currentIndex];
+  // Find the category and year
+  const category = artworksData.categories.find(
+    (cat) => cat.name === categoryName
+  );
+  const yearData = category?.years.find((y) => y.year === year);
+  const works = yearData?.works || [];
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: 'calc(100vh - 64px)', // Adjust for AppBar height
-        padding: 2,
-      }}
-    >
-      <Typography variant="h4" gutterBottom>
-        {currentArtwork.title}
-      </Typography>
-
-      {/* Display Artwork Based on Type */}
-      {currentArtwork.type === 'image' && (
-        <img
-          src={currentArtwork.src}
-          alt={currentArtwork.title}
-          style={{ maxWidth: '100%', maxHeight: '70vh' }}
-        />
-      )}
-      {currentArtwork.type === 'video' && (
-        <video controls style={{ maxWidth: '100%', maxHeight: '70vh' }}>
-          <source src={currentArtwork.src} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
-      )}
-      {currentArtwork.type === 'audio' && (
-        <audio controls>
-          <source src={currentArtwork.src} type="audio/mp3" />
-          Your browser does not support the audio element.
-        </audio>
-      )}
-      {currentArtwork.type === 'text' && (
-        <Typography variant="body1">{currentArtwork.content}</Typography>
-      )}
-
-      {/* Navigation Buttons */}
-      <Box sx={{ marginTop: 2 }}>
-        <Button variant="contained" onClick={handlePrev} sx={{ marginRight: 1 }}>
-          Previous
-        </Button>
-        <Button variant="contained" onClick={handleNext}>
-          Next
-        </Button>
-      </Box>
-    </Box>
+    <Grid container spacing={2} sx={{ padding: 2 }}>
+      {works.map((work) => (
+        <Grid item xs={12} sm={6} md={4} key={work.id}>
+          <Card>
+            {work.type === 'image' && (
+              <CardMedia
+                component="img"
+                height="200"
+                image={work.src}
+                alt={work.title}
+              />
+            )}
+            {work.type === 'audio' && (
+              <CardContent>
+                <Typography variant="h6">{work.title}</Typography>
+                <Typography variant="subtitle1">
+                  {work.artist || work.author}
+                </Typography>
+                <audio controls style={{ width: '100%' }}>
+                  <source src={work.src} type="audio/mp3" />
+                  Your browser does not support the audio element.
+                </audio>
+              </CardContent>
+            )}
+            {work.type === 'text' && (
+              <CardContent>
+                <Typography variant="h6">{work.title}</Typography>
+                <Typography variant="subtitle1">
+                  {work.artist || work.author}
+                </Typography>
+                <Typography variant="body1">{work.content}</Typography>
+              </CardContent>
+            )}
+            {work.type === 'image' && (
+              <CardContent>
+                <Typography variant="h6">{work.title}</Typography>
+                <Typography variant="subtitle1">
+                  {work.artist || work.author}
+                </Typography>
+                <Typography variant="body2">{work.description}</Typography>
+              </CardContent>
+            )}
+          </Card>
+        </Grid>
+      ))}
+    </Grid>
   );
 }
 
