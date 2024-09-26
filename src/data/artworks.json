@@ -41,6 +41,13 @@
       "type": "youtube",
       "src": "dQw4w9WgXcQ?si=vl8AAiV6O_5-ClXw",
       "description": "1987"
+    },
+    {
+      "id": 7,
+      "title": "Ozymandias",
+      "type": "text",
+      "src": "/assets/texts/ozymandias.txt",
+      "description": "1818"
     }
   ],
   "featured": [3, 6,  4, 5, 1, 2],
@@ -63,6 +70,10 @@
       "name": "Literature",
       "featured": [2],
       "years": [
+        {
+          "year": "1818",
+          "works": [7]
+        },
         {
           "year": "1609",
           "works": [2]
