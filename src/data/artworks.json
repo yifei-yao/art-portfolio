@@ -5,24 +5,31 @@
       "title": "Symphony No. 5",
       "type": "audio",
       "src": "/assets/music/beethoven_symphony_5.m4a",
-      "description": "A classic symphony."
+      "description": "Schicksalssinfonie"
     },
     {
       "id": 2,
       "title": "Sonnet 18",
       "type": "text",
       "src": "/assets/texts/sonnet_18.txt",
-      "description": "A renowned sonnet."
+      "description": "Shall I compare thee to a summer's day"
     },
     {
       "id": 3,
       "title": "Starry Night",
       "type": "image",
       "src": "/assets/images/starry_night.jpg",
-      "description": "An iconic night sky painting."
+      "description": "Oil on canvas, 29.0 x 36.3\", 1889"
+    },
+    {
+      "id": 4,
+      "title": "Sunflowers",
+      "type": "image",
+      "src": "/assets/images/sunflowers.jpg",
+      "description": "Oil on canvas, 36.3 x 29\", 1888"
     }
   ],
-  "featured": [3, 1, 2],
+  "featured": [3, 4, 1, 2],
   "categories": [
     {
       "name": "Music",
@@ -51,6 +58,10 @@
         {
           "year": "1889",
           "works": [3]
+        },
+        {
+          "year": "1888",
+          "works": [4]
         }
       ]
     }
