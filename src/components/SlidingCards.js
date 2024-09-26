@@ -64,7 +64,12 @@ function ArtworkCard({ work }) {
             maxHeight={{ base: '40vh', md: '50vh', lg: '60vh' }}
             objectFit="contain"
           />
-          <Heading fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }} textAlign="center">
+          <Heading
+            fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }}
+            textAlign="center"
+            fontWeight="medium" // Change font weight to medium for a lighter look
+            color="gray.600" // Change the color to a gray tone
+          >
             {work.title}
           </Heading>
           {work.description && (
@@ -77,7 +82,12 @@ function ArtworkCard({ work }) {
 
       {work.type === 'audio' && (
         <VStack spacing={6} align="center" width="100%">
-          <Heading fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }} textAlign="center">
+          <Heading
+            fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }}
+            textAlign="center"
+            fontWeight="medium" // Change font weight to medium for a lighter look
+            color="gray.600" // Change the color to a gray tone
+          >
             {work.title}
           </Heading>
           <audio controls style={{ width: '100%' }}>
@@ -94,7 +104,12 @@ function ArtworkCard({ work }) {
 
       {work.type === 'video' && (
         <VStack spacing={6} align="center" width="100%">
-          <Heading fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }} textAlign="center">
+          <Heading
+            fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }}
+            textAlign="center"
+            fontWeight="medium" // Change font weight to medium for a lighter look
+            color="gray.600" // Change the color to a gray tone
+          >
             {work.title}
           </Heading>
           <video controls style={{ width: '100%', maxHeight: '60vh' }}>
@@ -111,15 +126,20 @@ function ArtworkCard({ work }) {
 
       {work.type === 'youtube' && (
         <VStack spacing={6} align="center" width="100%">
-          <Heading fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }} textAlign="center">
+          <Heading
+            fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }}
+            textAlign="center"
+            fontWeight="medium" // Change font weight to medium for a lighter look
+            color="gray.600" // Change the color to a gray tone
+          >
             {work.title}
           </Heading>
-          <Box width="100%" maxWidth="800px" height="auto" aspectRatio="16/9">
+          <Box width="100%" maxWidth="800px" height="auto">
             <YouTube
               videoId={work.src}
               opts={{
                 width: '100%',
-                height: '450px', // Set a specific height to maintain 16:9 aspect ratio
+                height: '450px',
                 playerVars: {
                   autoplay: 0,
                 },
@@ -136,7 +156,12 @@ function ArtworkCard({ work }) {
 
       {work.type === 'text' && (
         <VStack spacing={6} align="center" width="100%" overflow="hidden">
-          <Heading fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }} textAlign="center">
+          <Heading
+            fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }}
+            textAlign="center"
+            fontWeight="medium" // Change font weight to medium for a lighter look
+            color="gray.600" // Change the color to a gray tone
+          >
             {work.title}
           </Heading>
           <Text
@@ -160,7 +185,6 @@ function ArtworkCard({ work }) {
     </Box>
   );
 }
-
 function SlidingCards({ artworkIds, artworksMap }) {
   const sliderRef = React.useRef(null);
   const [isHovered, setIsHovered] = useState(false);
