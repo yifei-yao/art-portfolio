@@ -37,38 +37,38 @@ function ArtworkCard({ work }) {
 
   return (
     <Box
-      // Ensure the card fits within the viewport with some padding
-      maxWidth="calc(100vw - 40px)"
-      maxHeight="calc(100vh - 100px)"
+      // Adjusted to leave more margin around the window
+      maxWidth={{ base: '90vw', md: '80vw', lg: '70vw' }} // Responsive maxWidth
+      maxHeight={{ base: '85vh', md: '80vh', lg: '75vh' }} // Responsive maxHeight
       width="100%"
       height="100%"
       mx="auto"
-      p={4}
+      p={6} // Increased padding for a more relaxed layout
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
       boxShadow="lg"
-      // Responsive adjustments
+      // Centering content both vertically and horizontally
       display="flex"
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
     >
       {work.type === 'image' && (
-        <VStack spacing={4} width="100%" height="100%">
+        <VStack spacing={6} align="center">
           <Image
             src={work.src}
             alt={work.title}
             borderRadius="md"
             maxWidth="100%"
-            maxHeight="70vh" // Limit image height to 70% of viewport height
+            maxHeight={{ base: '40vh', md: '50vh', lg: '60vh' }} // Responsive maxHeight
             objectFit="contain"
           />
-          <Heading fontSize="xl" textAlign="center">
+          <Heading fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }} textAlign="center">
             {work.title}
           </Heading>
           {work.description && (
-            <Text fontSize="md" color="gray.600" textAlign="center">
+            <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.600" textAlign="center">
               {work.description}
             </Text>
           )}
@@ -76,8 +76,8 @@ function ArtworkCard({ work }) {
       )}
 
       {work.type === 'audio' && (
-        <VStack spacing={4} align="center" width="100%">
-          <Heading fontSize="xl" textAlign="center">
+        <VStack spacing={6} align="center" width="100%">
+          <Heading fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }} textAlign="center">
             {work.title}
           </Heading>
           <audio controls style={{ width: '100%' }}>
@@ -85,7 +85,7 @@ function ArtworkCard({ work }) {
             Your browser does not support the audio element.
           </audio>
           {work.description && (
-            <Text fontSize="md" color="gray.600" textAlign="center">
+            <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.600" textAlign="center">
               {work.description}
             </Text>
           )}
@@ -93,14 +93,8 @@ function ArtworkCard({ work }) {
       )}
 
       {work.type === 'text' && (
-        <VStack
-          spacing={4}
-          align="center"
-          width="100%"
-          height="100%"
-          overflow="hidden"
-        >
-          <Heading fontSize="xl" textAlign="center">
+        <VStack spacing={6} align="center" width="100%" overflow="hidden">
+          <Heading fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }} textAlign="center">
             {work.title}
           </Heading>
           <Text
@@ -108,13 +102,14 @@ function ArtworkCard({ work }) {
             p={4}
             textAlign="center"
             overflowY="auto"
-            maxHeight="60vh" // Limit text area to 60% of viewport height
+            maxHeight={{ base: '35vh', md: '40vh', lg: '45vh' }} // Responsive maxHeight for text
             width="100%"
+            fontSize={{ base: 'sm', md: 'md' }}
           >
             {textContent || 'Loading text...'}
           </Text>
           {work.description && (
-            <Text fontSize="md" color="gray.600" textAlign="center">
+            <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.600" textAlign="center">
               {work.description}
             </Text>
           )}
@@ -154,7 +149,7 @@ function SlidingCards({ artworkIds, artworksMap }) {
   };
 
   // Responsive button size based on screen width
-  const buttonSize = useBreakpointValue({ base: 'sm', md: 'md' });
+  const buttonSize = useBreakpointValue({ base: 'md', md: 'lg' }); // Increased sizes
 
   return (
     <Box
@@ -164,12 +159,14 @@ function SlidingCards({ artworkIds, artworksMap }) {
       p={4}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      // Optional: To ensure the hover area covers the entire slider
+      // you might need to adjust width/height or use flex layouts as needed
     >
       {/* Navigation Arrows */}
       <IconButton
         icon={<ArrowBackIcon />}
         position="absolute"
-        left="10px"
+        left="20px" // Increased left margin for better spacing
         top="50%"
         transform="translateY(-50%)"
         zIndex="2"
@@ -180,11 +177,12 @@ function SlidingCards({ artworkIds, artworksMap }) {
         opacity={isHovered ? 1 : 0}
         transition="opacity 0.3s ease"
         pointerEvents={isHovered ? 'auto' : 'none'} // Prevents button from capturing events when hidden
+        size={buttonSize}
       />
       <IconButton
         icon={<ArrowForwardIcon />}
         position="absolute"
-        right="10px"
+        right="20px" // Increased right margin for better spacing
         top="50%"
         transform="translateY(-50%)"
         zIndex="2"
@@ -195,6 +193,7 @@ function SlidingCards({ artworkIds, artworksMap }) {
         opacity={isHovered ? 1 : 0}
         transition="opacity 0.3s ease"
         pointerEvents={isHovered ? 'auto' : 'none'}
+        size={buttonSize}
       />
 
       {/* Slider */}
