@@ -27,9 +27,16 @@
       "type": "image",
       "src": "/assets/images/sunflowers.jpg",
       "description": "Oil on canvas, 36.3 x 29\", 1888"
+    },
+    {
+      "id": 5,
+      "title": "Self-portrait",
+      "type": "image",
+      "src": "/assets/images/self_portrait.jpg",
+      "description": "Oil on canvas, 26 x 21\", 1889"
     }
   ],
-  "featured": [3, 4, 1, 2],
+  "featured": [3, 4, 5, 1, 2],
   "categories": [
     {
       "name": "Music",
@@ -57,7 +64,7 @@
       "years": [
         {
           "year": "1889",
-          "works": [3]
+          "works": [3, 5]
         },
         {
           "year": "1888",
