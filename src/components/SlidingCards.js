@@ -8,8 +8,11 @@ import {
   Text,
   Heading,
   IconButton,
+  useBreakpointValue,
 } from '@chakra-ui/react';
 import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 // ArtworkCard component defined within SlidingCards.js
 function ArtworkCard({ work }) {
@@ -123,6 +126,7 @@ function ArtworkCard({ work }) {
 
 function SlidingCards({ artworkIds, artworksMap }) {
   const sliderRef = React.useRef(null);
+  const [isHovered, setIsHovered] = useState(false);
 
   // Slider settings
   const settings = {
@@ -149,8 +153,18 @@ function SlidingCards({ artworkIds, artworksMap }) {
     }
   };
 
+  // Responsive button size based on screen width
+  const buttonSize = useBreakpointValue({ base: 'sm', md: 'md' });
+
   return (
-    <Box position="relative" maxWidth="100%" mx="auto" p={4}>
+    <Box
+      position="relative"
+      maxWidth="100%"
+      mx="auto"
+      p={4}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
       {/* Navigation Arrows */}
       <IconButton
         icon={<ArrowBackIcon />}
@@ -163,6 +177,9 @@ function SlidingCards({ artworkIds, artworksMap }) {
         variant="ghost"
         colorScheme="blue"
         aria-label="Previous"
+        opacity={isHovered ? 1 : 0}
+        transition="opacity 0.3s ease"
+        pointerEvents={isHovered ? 'auto' : 'none'} // Prevents button from capturing events when hidden
       />
       <IconButton
         icon={<ArrowForwardIcon />}
@@ -175,6 +192,9 @@ function SlidingCards({ artworkIds, artworksMap }) {
         variant="ghost"
         colorScheme="blue"
         aria-label="Next"
+        opacity={isHovered ? 1 : 0}
+        transition="opacity 0.3s ease"
+        pointerEvents={isHovered ? 'auto' : 'none'}
       />
 
       {/* Slider */}
