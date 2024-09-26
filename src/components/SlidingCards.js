@@ -17,7 +17,6 @@ import 'slick-carousel/slick/slick-theme.css';
 // ArtworkCard component defined within SlidingCards.js
 import YouTube from 'react-youtube';
 
-// ArtworkCard component
 function ArtworkCard({ work }) {
   const [textContent, setTextContent] = useState('');
 
@@ -40,12 +39,12 @@ function ArtworkCard({ work }) {
 
   return (
     <Box
-      maxWidth={{ base: '90vw', md: '80vw', lg: '70vw' }} // Responsive maxWidth
-      maxHeight={{ base: '85vh', md: '80vh', lg: '75vh' }} // Responsive maxHeight
+      maxWidth={{ base: '90vw', md: '80vw', lg: '70vw' }}
+      maxHeight={{ base: '85vh', md: '80vh', lg: '75vh' }}
       width="100%"
       height="100%"
       mx="auto"
-      p={6} // Increased padding for a more relaxed layout
+      p={6}
       borderWidth="1px"
       borderRadius="lg"
       overflow="hidden"
@@ -62,7 +61,7 @@ function ArtworkCard({ work }) {
             alt={work.title}
             borderRadius="md"
             maxWidth="100%"
-            maxHeight={{ base: '40vh', md: '50vh', lg: '60vh' }} // Responsive maxHeight
+            maxHeight={{ base: '40vh', md: '50vh', lg: '60vh' }}
             objectFit="contain"
           />
           <Heading fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }} textAlign="center">
@@ -98,7 +97,7 @@ function ArtworkCard({ work }) {
           <Heading fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }} textAlign="center">
             {work.title}
           </Heading>
-          <video controls style={{ width: '100%' }}>
+          <video controls style={{ width: '100%', maxHeight: '60vh' }}>
             <source src={work.src} type="video/mp4" />
             Your browser does not support the video element.
           </video>
@@ -115,7 +114,18 @@ function ArtworkCard({ work }) {
           <Heading fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }} textAlign="center">
             {work.title}
           </Heading>
-          <YouTube videoId={work.src} opts={{ width: '100%', height: '400px' }} />
+          <Box width="100%" maxWidth="800px" height="auto" aspectRatio="16/9">
+            <YouTube
+              videoId={work.src}
+              opts={{
+                width: '100%',
+                height: '450px', // Set a specific height to maintain 16:9 aspect ratio
+                playerVars: {
+                  autoplay: 0,
+                },
+              }}
+            />
+          </Box>
           {work.description && (
             <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.600" textAlign="center">
               {work.description}
@@ -134,7 +144,7 @@ function ArtworkCard({ work }) {
             p={4}
             textAlign="center"
             overflowY="auto"
-            maxHeight={{ base: '35vh', md: '40vh', lg: '45vh' }} // Responsive maxHeight for text
+            maxHeight={{ base: '35vh', md: '40vh', lg: '45vh' }}
             width="100%"
             fontSize={{ base: 'sm', md: 'md' }}
           >

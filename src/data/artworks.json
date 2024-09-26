@@ -34,14 +34,25 @@
       "type": "image",
       "src": "/assets/images/self_portrait.jpg",
       "description": "Oil on canvas, 26 x 21\", 1889"
+    },
+    {
+      "id": 6,
+      "title": "Never Gonna Give You Up",
+      "type": "youtube",
+      "src": "dQw4w9WgXcQ?si=vl8AAiV6O_5-ClXw",
+      "description": "1987"
     }
   ],
-  "featured": [3, 4, 5, 1, 2],
+  "featured": [3, 6,  4, 5, 1, 2],
   "categories": [
     {
       "name": "Music",
       "featured": [1],
       "years": [
+        {
+          "year": "1987",
+          "works": [6]
+        },
         {
           "year": "1808",
           "works": [1]
