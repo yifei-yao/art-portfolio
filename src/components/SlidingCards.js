@@ -15,6 +15,9 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
 // ArtworkCard component defined within SlidingCards.js
+import YouTube from 'react-youtube';
+
+// ArtworkCard component
 function ArtworkCard({ work }) {
   const [textContent, setTextContent] = useState('');
 
@@ -37,7 +40,6 @@ function ArtworkCard({ work }) {
 
   return (
     <Box
-      // Adjusted to leave more margin around the window
       maxWidth={{ base: '90vw', md: '80vw', lg: '70vw' }} // Responsive maxWidth
       maxHeight={{ base: '85vh', md: '80vh', lg: '75vh' }} // Responsive maxHeight
       width="100%"
@@ -48,7 +50,6 @@ function ArtworkCard({ work }) {
       borderRadius="lg"
       overflow="hidden"
       boxShadow="lg"
-      // Centering content both vertically and horizontally
       display="flex"
       flexDirection="column"
       justifyContent="center"
@@ -84,6 +85,37 @@ function ArtworkCard({ work }) {
             <source src={work.src} type="audio/mpeg" />
             Your browser does not support the audio element.
           </audio>
+          {work.description && (
+            <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.600" textAlign="center">
+              {work.description}
+            </Text>
+          )}
+        </VStack>
+      )}
+
+      {work.type === 'video' && (
+        <VStack spacing={6} align="center" width="100%">
+          <Heading fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }} textAlign="center">
+            {work.title}
+          </Heading>
+          <video controls style={{ width: '100%' }}>
+            <source src={work.src} type="video/mp4" />
+            Your browser does not support the video element.
+          </video>
+          {work.description && (
+            <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.600" textAlign="center">
+              {work.description}
+            </Text>
+          )}
+        </VStack>
+      )}
+
+      {work.type === 'youtube' && (
+        <VStack spacing={6} align="center" width="100%">
+          <Heading fontSize={{ base: 'lg', md: 'xl', lg: '2xl' }} textAlign="center">
+            {work.title}
+          </Heading>
+          <YouTube videoId={work.src} opts={{ width: '100%', height: '400px' }} />
           {work.description && (
             <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.600" textAlign="center">
               {work.description}
